@@ -1,0 +1,23 @@
+Linux ognevde 6.8.0-138-generic #138-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul 31 22:41:49 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+ens192           UP             10.10.10.34/24 fe80::250:56ff:fe01:e37b/64 
+docker0          DOWN           172.17.0.1/16 
+br-a7d956b9525b  UP             172.18.0.1/16 fe80::34d9:b1ff:fe3b:587f/64 
+br-7d05035df546  UP             172.19.0.1/16 fe80::d4cc:c6ff:fe2a:154/64 
+vethe5fecb7@if2  UP             fe80::10c5:73ff:fec3:81f0/64 
+veth926f7d8@if2  UP             fe80::44a1:c9ff:fe65:f688/64 
+veth05d3c06@if3  UP             fe80::c15:70ff:fecc:c73/64 
+vmware

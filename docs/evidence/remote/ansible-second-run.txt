@@ -1,0 +1,96 @@
+
+PLAY [Configure Ubuntu container host] *****************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [homework-remote]
+
+TASK [host : Require supported Ubuntu release] *********************************
+ok: [homework-remote] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [host : Check bootstrap user's SSH authorization file] ********************
+ok: [homework-remote]
+
+TASK [host : Require authorized key before disabling password login] ***********
+ok: [homework-remote] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [host : Install host prerequisites] ***************************************
+ok: [homework-remote]
+
+TASK [host : Create repository key directory] **********************************
+ok: [homework-remote]
+
+TASK [host : Install Docker repository signing key] ****************************
+ok: [homework-remote]
+
+TASK [host : Configure official Docker repository] *****************************
+ok: [homework-remote]
+
+TASK [host : Update cache after repository change] *****************************
+skipping: [homework-remote]
+
+TASK [host : Install Docker Engine and Compose plugin] *************************
+ok: [homework-remote]
+
+TASK [host : Create deployment user] *******************************************
+ok: [homework-remote]
+
+TASK [host : Enable passwordless sudo as required by the assignment] ***********
+ok: [homework-remote]
+
+TASK [host : Create deployer SSH directory] ************************************
+ok: [homework-remote]
+
+TASK [host : Reuse authorized bootstrap public keys] ***************************
+skipping: [homework-remote]
+
+TASK [host : Install dedicated homework public key] ****************************
+ok: [homework-remote]
+
+TASK [host : Disable SSH passwords and root login] *****************************
+ok: [homework-remote]
+
+TASK [host : Allow SSH only from the explicitly configured source] *************
+ok: [homework-remote]
+
+TASK [host : Deny unsolicited incoming connections] ****************************
+ok: [homework-remote]
+
+TASK [host : Allow outgoing connections] ***************************************
+ok: [homework-remote]
+
+TASK [host : Enable guest firewall] ********************************************
+ok: [homework-remote]
+
+TASK [host : Start and enable system services] *********************************
+ok: [homework-remote] => (item=docker)
+ok: [homework-remote] => (item=rsyslog)
+
+TASK [host : Install monitoring tools] *****************************************
+ok: [homework-remote] => (item=monitor.sh)
+ok: [homework-remote] => (item=count-errors.awk)
+
+TASK [app : Create application directories] ************************************
+ok: [homework-remote] => (item=)
+ok: [homework-remote] => (item=nginx)
+ok: [homework-remote] => (item=app)
+
+TASK [app : Install Compose configuration] *************************************
+ok: [homework-remote] => (item=docker-compose.yml)
+ok: [homework-remote] => (item=nginx/default.conf)
+ok: [homework-remote] => (item=app/index.html)
+
+TASK [app : Start application] *************************************************
+ok: [homework-remote]
+
+TASK [app : Check reverse proxy response] **************************************
+ok: [homework-remote]
+
+PLAY RECAP *********************************************************************
+homework-remote            : ok=24   changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+

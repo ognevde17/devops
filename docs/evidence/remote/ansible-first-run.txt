@@ -1,0 +1,91 @@
+
+PLAY [Configure Ubuntu container host] *****************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [homework-remote]
+
+TASK [host : Require supported Ubuntu release] *********************************
+ok: [homework-remote] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [host : Install host prerequisites] ***************************************
+ok: [homework-remote]
+
+TASK [host : Create repository key directory] **********************************
+ok: [homework-remote]
+
+TASK [host : Install Docker repository signing key] ****************************
+[WARNING]: Module remote_tmp /root/.ansible/tmp did not exist and was created with a mode of 0700, this may cause issues when running as another user. To avoid this, create the remote_tmp dir with the correct permissions manually
+changed: [homework-remote]
+
+TASK [host : Configure official Docker repository] *****************************
+changed: [homework-remote]
+
+TASK [host : Update cache after repository change] *****************************
+changed: [homework-remote]
+
+TASK [host : Install Docker Engine and Compose plugin] *************************
+changed: [homework-remote]
+
+TASK [host : Create deployment user] *******************************************
+changed: [homework-remote]
+
+TASK [host : Enable passwordless sudo as required by the assignment] ***********
+changed: [homework-remote]
+
+TASK [host : Create deployer SSH directory] ************************************
+changed: [homework-remote]
+
+TASK [host : Reuse authorized bootstrap public keys] ***************************
+skipping: [homework-remote]
+
+TASK [host : Install dedicated homework public key] ****************************
+changed: [homework-remote]
+
+TASK [host : Disable SSH passwords and root login] *****************************
+changed: [homework-remote]
+
+TASK [host : Allow SSH only from the explicitly configured source] *************
+changed: [homework-remote]
+
+TASK [host : Deny unsolicited incoming connections] ****************************
+ok: [homework-remote]
+
+TASK [host : Allow outgoing connections] ***************************************
+ok: [homework-remote]
+
+TASK [host : Enable guest firewall] ********************************************
+changed: [homework-remote]
+
+TASK [host : Start and enable system services] *********************************
+ok: [homework-remote] => (item=docker)
+ok: [homework-remote] => (item=rsyslog)
+
+TASK [host : Install monitoring tools] *****************************************
+changed: [homework-remote] => (item=monitor.sh)
+changed: [homework-remote] => (item=count-errors.awk)
+
+TASK [app : Create application directories] ************************************
+changed: [homework-remote] => (item=)
+changed: [homework-remote] => (item=nginx)
+changed: [homework-remote] => (item=app)
+
+TASK [app : Install Compose configuration] *************************************
+changed: [homework-remote] => (item=docker-compose.yml)
+changed: [homework-remote] => (item=nginx/default.conf)
+changed: [homework-remote] => (item=app/index.html)
+
+TASK [app : Start application] *************************************************
+changed: [homework-remote]
+
+TASK [app : Check reverse proxy response] **************************************
+ok: [homework-remote]
+
+RUNNING HANDLER [host : Reload SSH] ********************************************
+changed: [homework-remote]
+
+PLAY RECAP *********************************************************************
+homework-remote            : ok=24   changed=16   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+

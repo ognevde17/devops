@@ -1,0 +1,13 @@
+test_active_empty (test_monitor.MonitorTests.test_active_empty) ... ok
+test_inactive_prints_journal (test_monitor.MonitorTests.test_inactive_prints_journal) ... ok
+test_invalid_argument (test_monitor.MonitorTests.test_invalid_argument) ... ok
+test_iso_offsets (test_monitor.MonitorTests.test_iso_offsets) ... ok
+test_midnight_year_rollover_and_boundary (test_monitor.MonitorTests.test_midnight_year_rollover_and_boundary) ... ok
+test_missing_unit (test_monitor.MonitorTests.test_missing_unit) ... ok
+test_unknown_timestamp_warns (test_monitor.MonitorTests.test_unknown_timestamp_warns) ... ok
+test_unreadable_log (test_monitor.MonitorTests.test_unreadable_log) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.050s
+
+OK

@@ -1,0 +1,3 @@
+service=docker.service status=active
+syslog_errors_last_hour=115
+window_epoch=[1792078095,1792081695] source=/var/log/syslog

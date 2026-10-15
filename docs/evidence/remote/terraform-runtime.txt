@@ -1,0 +1,52 @@
+HTTP/1.1 200 OK
+Server: nginx/1.28.0
+Date: Thu, 15 Oct 2026 16:40:50 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Wed, 23 Apr 2025 12:59:25 GMT
+Connection: keep-alive
+ETag: "6808e42d-267"
+Accept-Ranges: bytes
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+NAMES                      STATUS                    PORTS
+homework-terraform-nginx   Up 35 seconds (healthy)   127.0.0.1:8088->80/tcp
+devops-homework-nginx-1    Up 13 minutes (healthy)   127.0.0.1:80->80/tcp
+devops-homework-app-1      Up 14 minutes (healthy)   80/tcp
+/homework-terraform-nginx networks={"homework-terraform-net":{"IPAMConfig":{},"Links":null,"Aliases":[],"DriverOpts":{},"GwPriority":0,"NetworkID":"1ad8f59a009a148ff732d4520c00b4cb9987afd74c5aadeb30e852c775ca8835","EndpointID":"e34368d32a8e0928f1c197977abeb2860de6d8275a01b3ec591b74d12cb7d02e","Gateway":"172.20.0.1","IPAddress":"172.20.0.2","MacAddress":"e2:c9:02:fb:e9:3d","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["homework-terraform-nginx","76c820222407"]}} mounts=[{"Type":"volume","Name":"homework-terraform-html","Source":"/var/lib/docker/volumes/homework-terraform-html/_data","Destination":"/usr/share/nginx/html","Driver":"local","Mode":"ro","RW":false,"Propagation":""}]
+/devops-homework-nginx-1 networks={"devops-homework_app_net":{"IPAMConfig":null,"Links":null,"Aliases":["devops-homework-nginx-1","nginx"],"DriverOpts":null,"GwPriority":0,"NetworkID":"7d05035df5466c55923690d8ad337fe8cbf5393903a7bc85882e1c4d9853e07f","EndpointID":"03bcc01421322c701dc19e08a04016fa553317173da1eb98a5363d1b48490fd6","Gateway":"","IPAddress":"172.19.0.3","MacAddress":"12:62:64:a5:ab:48","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["devops-homework-nginx-1","nginx","bb18473066ba"]},"devops-homework_frontend":{"IPAMConfig":null,"Links":null,"Aliases":["devops-homework-nginx-1","nginx"],"DriverOpts":null,"GwPriority":0,"NetworkID":"a7d956b9525b77e81943267f47658856aa29f82c9c7ef1b1584369df28c04e27","EndpointID":"5cb971e4622869f19468ecf9f47629874bf81683bf000d97a383adcd160b2139","Gateway":"172.18.0.1","IPAddress":"172.18.0.2","MacAddress":"6e:5b:79:5d:f9:b3","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["devops-homework-nginx-1","nginx","bb18473066ba"]}} mounts=[{"Type":"bind","Source":"/opt/app/nginx/default.conf","Destination":"/etc/nginx/conf.d/default.conf","Mode":"ro","RW":false,"Propagation":"rprivate"}]
+/devops-homework-app-1 networks={"devops-homework_app_net":{"IPAMConfig":null,"Links":null,"Aliases":["devops-homework-app-1","app"],"DriverOpts":null,"GwPriority":0,"NetworkID":"7d05035df5466c55923690d8ad337fe8cbf5393903a7bc85882e1c4d9853e07f","EndpointID":"14b18826498b132f39ecafb7f08709206d99d02d3525527b5d5e4d0ed9fc98b7","Gateway":"","IPAddress":"172.19.0.2","MacAddress":"52:25:6d:87:e6:10","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["devops-homework-app-1","app","1d043aefcf36"]}} mounts=[{"Type":"bind","Source":"/opt/app/app/index.html","Destination":"/usr/share/nginx/html/index.html","Mode":"ro","RW":false,"Propagation":"rprivate"}]
+[
+    {
+        "CreatedAt": "2026-10-15T16:40:13Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/homework-terraform-html/_data",
+        "Name": "homework-terraform-html",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+name=homework-terraform-net driver=bridge containers={"76c820222407a3b008b71486bdc7c4d3bd56fe6ccb9518aba9c80b35f515c8dd":{"Name":"homework-terraform-nginx","EndpointID":"e34368d32a8e0928f1c197977abeb2860de6d8275a01b3ec591b74d12cb7d02e","MacAddress":"e2:c9:02:fb:e9:3d","IPv4Address":"172.20.0.2/16","IPv6Address":""}}

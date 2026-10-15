@@ -1,0 +1,4 @@
+Docker version 29.9.1, build dfc520d
+Docker Compose version v5.6.0
+Python 3.12.3
+GNU Awk 5.2.1, API 3.2, PMA Avon 8-g1, (GNU MPFR 4.2.1, GNU MP 6.3.0)

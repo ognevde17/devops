@@ -1,0 +1,4 @@
+uid=1003(deployer) gid=1003(deployer) groups=1003(deployer),27(sudo)
+service=docker.service status=active
+syslog_errors_last_hour=115
+window_epoch=[1792078101,1792081701] source=/var/log/syslog
