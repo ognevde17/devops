@@ -1,0 +1,15 @@
+.DS_Store
+.terraform/
+*.tfstate*
+*.tfplan
+terraform.tfvars
+.runtime/
+.venv/
+__pycache__/
+.pytest_cache/
+ansible/inventory.ini
+ansible/ssh.config
+*.retry
+*.pem
+*.key
+.env

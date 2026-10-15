@@ -1,0 +1,2 @@
+# Preserve exact stdout, including HTTP CRLF and Ansible spacing.
+docs/evidence/** -text -whitespace

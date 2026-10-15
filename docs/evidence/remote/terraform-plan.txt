@@ -1,0 +1,136 @@
+Success! The configuration is valid.
+
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # docker_container.nginx will be created
+  + resource "docker_container" "nginx" {
+      + attach                                      = false
+      + bridge                                      = (known after apply)
+      + command                                     = (known after apply)
+      + container_logs                              = (known after apply)
+      + container_read_refresh_timeout_milliseconds = 15000
+      + entrypoint                                  = (known after apply)
+      + env                                         = (known after apply)
+      + exit_code                                   = (known after apply)
+      + hostname                                    = (known after apply)
+      + id                                          = (known after apply)
+      + image                                       = (known after apply)
+      + init                                        = (known after apply)
+      + ipc_mode                                    = (known after apply)
+      + log_driver                                  = (known after apply)
+      + log_opts                                    = {
+          + "max-file" = "3"
+          + "max-size" = "10m"
+        }
+      + logs                                        = false
+      + memory_reservation                          = 0
+      + must_run                                    = true
+      + name                                        = "homework-terraform-nginx"
+      + network_data                                = (known after apply)
+      + network_mode                                = "bridge"
+      + platform                                    = (known after apply)
+      + read_only                                   = false
+      + remove_volumes                              = true
+      + restart                                     = "unless-stopped"
+      + rm                                          = false
+      + runtime                                     = (known after apply)
+      + security_opts                               = (known after apply)
+      + shm_size                                    = (known after apply)
+      + start                                       = true
+      + stdin_open                                  = false
+      + stop_signal                                 = (known after apply)
+      + stop_timeout                                = (known after apply)
+      + tty                                         = false
+      + wait                                        = true
+      + wait_timeout                                = 60
+
+      + healthcheck {
+          + interval       = "5s"
+          + retries        = 5
+          + start_interval = "0s"
+          + start_period   = "0s"
+          + test           = [
+              + "CMD",
+              + "wget",
+              + "-q",
+              + "-O",
+              + "/dev/null",
+              + "http://127.0.0.1/",
+            ]
+          + timeout        = "3s"
+        }
+
+      + labels (known after apply)
+
+      + networks_advanced {
+          + aliases        = []
+          + driver_opts    = []
+          + link_local_ips = []
+          + name           = "homework-terraform-net"
+            # (3 unchanged attributes hidden)
+        }
+
+      + ports {
+          + external = 8088
+          + internal = 80
+          + ip       = "127.0.0.1"
+          + protocol = "tcp"
+        }
+
+      + volumes {
+          + container_path  = "/usr/share/nginx/html"
+          + read_only       = true
+          + volume_name     = "homework-terraform-html"
+            # (3 unchanged attributes hidden)
+        }
+    }
+
+  # docker_image.nginx will be created
+  + resource "docker_image" "nginx" {
+      + id           = (known after apply)
+      + image_id     = (known after apply)
+      + keep_locally = true
+      + name         = "nginx:1.28.0-alpine"
+      + repo_digest  = (known after apply)
+    }
+
+  # docker_network.nginx will be created
+  + resource "docker_network" "nginx" {
+      + driver      = "bridge"
+      + id          = (known after apply)
+      + internal    = (known after apply)
+      + ipam_driver = "default"
+      + name        = "homework-terraform-net"
+      + options     = (known after apply)
+      + scope       = (known after apply)
+
+      + ipam_config (known after apply)
+    }
+
+  # docker_volume.html will be created
+  + resource "docker_volume" "html" {
+      + driver     = (known after apply)
+      + id         = (known after apply)
+      + mountpoint = (known after apply)
+      + name       = "homework-terraform-html"
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + container_name = "homework-terraform-nginx"
+  + network_name   = "homework-terraform-net"
+  + url_on_vm      = "http://127.0.0.1:8088"
+  + volume_name    = "homework-terraform-html"
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: homework.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "homework.tfplan"

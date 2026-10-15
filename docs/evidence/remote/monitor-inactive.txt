@@ -1,0 +1,15 @@
+Running as unit: devops-hw1-monitor-check.service; invocation ID: 631d500e09cd4d348c802d19d27df27d
+Finished with result: exit-code
+Main processes terminated with: code=exited/status=1
+Service runtime: 3ms
+CPU time consumed: 1ms
+Memory peak: 292.0K
+Memory swap peak: 0B
+service=devops-hw1-monitor-check.service status=failed
+Last 10 journal entries:
+Oct 15 16:28:53 ognevde systemd[1]: Started devops-hw1-monitor-check.service - /bin/false.
+Oct 15 16:28:53 ognevde systemd[1]: devops-hw1-monitor-check.service: Main process exited, code=exited, status=1/FAILURE
+Oct 15 16:28:53 ognevde systemd[1]: devops-hw1-monitor-check.service: Failed with result 'exit-code'.
+syslog_errors_last_hour=117
+window_epoch=[1792078133,1792081733] source=/var/log/syslog
+monitor_exit=1

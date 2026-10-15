@@ -1,0 +1,155 @@
+---
+- name: Require supported Ubuntu release
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution == 'Ubuntu'
+      - ansible_facts.distribution_version in ['22.04', '24.04']
+      - ssh_allowed_cidr is defined
+    fail_msg: Ubuntu 22.04/24.04 and an explicit SSH source CIDR are required.
+
+- name: Check bootstrap user's SSH authorization file
+  ansible.builtin.stat:
+    path: '/home/{{ ansible_user }}/.ssh/authorized_keys'
+  register: bootstrap_keys
+
+- name: Require authorized key before disabling password login
+  ansible.builtin.assert:
+    that:
+      - bootstrap_keys.stat.exists
+      - bootstrap_keys.stat.size | default(0) > 0
+    fail_msg: Install and test the dedicated SSH key before running this playbook.
+
+- name: Install host prerequisites
+  ansible.builtin.apt:
+    name: [ca-certificates, curl, sudo, gawk, rsyslog, ufw]
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Create repository key directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Install Docker repository signing key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: Configure official Docker repository
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/docker.sources
+    mode: '0644'
+    content: |
+      Types: deb
+      URIs: https://download.docker.com/linux/ubuntu
+      Suites: {{ ansible_facts.distribution_release }}
+      Components: stable
+      Architectures: {{ 'arm64' if ansible_facts.architecture == 'aarch64' else 'amd64' }}
+      Signed-By: /etc/apt/keyrings/docker.asc
+  register: docker_repository
+
+- name: Update cache after repository change
+  ansible.builtin.apt:
+    update_cache: true
+  when: docker_repository.changed
+
+- name: Install Docker Engine and Compose plugin
+  ansible.builtin.apt:
+    name: [docker-ce, docker-ce-cli, containerd.io, docker-buildx-plugin, docker-compose-plugin]
+    state: present
+
+- name: Create deployment user
+  ansible.builtin.user:
+    name: deployer
+    shell: /bin/bash
+    create_home: true
+    password_lock: true
+    groups: sudo
+    append: true
+
+- name: Enable passwordless sudo as required by the assignment
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/deployer
+    content: "deployer ALL=(ALL:ALL) NOPASSWD: ALL\n"
+    owner: root
+    group: root
+    mode: '0440'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Create deployer SSH directory
+  ansible.builtin.file:
+    path: /home/deployer/.ssh
+    state: directory
+    owner: deployer
+    group: deployer
+    mode: '0700'
+
+- name: Reuse authorized bootstrap public keys
+  ansible.builtin.copy:
+    src: '/home/{{ ansible_user }}/.ssh/authorized_keys'
+    remote_src: true
+    dest: /home/deployer/.ssh/authorized_keys
+    owner: deployer
+    group: deployer
+    mode: '0600'
+  when: deployer_public_key is not defined
+
+- name: Install dedicated homework public key
+  ansible.builtin.copy:
+    content: "{{ deployer_public_key | trim }}\n"
+    dest: /home/deployer/.ssh/authorized_keys
+    owner: deployer
+    group: deployer
+    mode: '0600'
+  when: deployer_public_key is defined
+
+- name: Disable SSH passwords and root login
+  ansible.builtin.copy:
+    dest: /etc/ssh/sshd_config.d/00-devops.conf
+    mode: '0644'
+    content: |
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      PermitRootLogin no
+    validate: /usr/sbin/sshd -t -f %s
+  notify: Reload SSH
+
+- name: Allow SSH only from the explicitly configured source
+  community.general.ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+    src: '{{ ssh_allowed_cidr }}'
+
+- name: Deny unsolicited incoming connections
+  community.general.ufw:
+    direction: incoming
+    policy: deny
+
+- name: Allow outgoing connections
+  community.general.ufw:
+    direction: outgoing
+    policy: allow
+
+- name: Enable guest firewall
+  community.general.ufw:
+    state: enabled
+
+- name: Start and enable system services
+  ansible.builtin.systemd_service:
+    name: '{{ item }}'
+    state: started
+    enabled: true
+  loop: [docker, rsyslog]
+
+- name: Install monitoring tools
+  ansible.builtin.copy:
+    src: '{{ playbook_dir }}/../scripts/{{ item }}'
+    dest: '/usr/local/bin/{{ item }}'
+    owner: root
+    group: root
+    mode: '0755'
+  loop: [monitor.sh, count-errors.awk]

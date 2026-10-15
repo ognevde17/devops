@@ -1,0 +1,7 @@
+[app_hosts]
+# Replace with the actual VM endpoint and the NEW homework key path.
+homework-remote ansible_host=203.0.113.10 ansible_user=student ansible_ssh_private_key_file=../.runtime/id_ed25519_homework ansible_ssh_common_args='-F /dev/null -o IdentityAgent=none -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=../.runtime/remote-known-hosts'
+
+[app_hosts:vars]
+# Use the client IP observed by the VM in SSH_CONNECTION, not the VM's IP.
+ssh_allowed_cidr=198.51.100.20/32

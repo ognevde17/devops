@@ -1,0 +1,6 @@
+NAME                      IMAGE                 COMMAND                  SERVICE   CREATED              STATUS                        PORTS
+devops-homework-app-1     nginx:1.28.0-alpine   "/docker-entrypoint.…"   app       About a minute ago   Up About a minute (healthy)   80/tcp
+devops-homework-nginx-1   nginx:1.28.0-alpine   "/docker-entrypoint.…"   nginx     About a minute ago   Up About a minute (healthy)   127.0.0.1:80->80/tcp
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>DevOps homework 1</title></head>
+<body><h1>Hello World</h1><p>Ubuntu VM → Docker Compose → Nginx reverse proxy → app</p></body></html>

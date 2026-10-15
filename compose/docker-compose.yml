@@ -1,0 +1,41 @@
+name: devops-homework
+services:
+  nginx:
+    image: nginx:1.28.0-alpine
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:80:80'
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      app:
+        condition: service_healthy
+    networks: [frontend, app_net]
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1/']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
+  app:
+    image: nginx:1.28.0-alpine
+    restart: unless-stopped
+    volumes:
+      - ./app/index.html:/usr/share/nginx/html/index.html:ro
+    networks: [app_net]
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1/']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
+networks:
+  frontend:
+    driver: bridge
+  app_net:
+    driver: bridge
+    internal: true

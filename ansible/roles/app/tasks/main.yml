@@ -1,0 +1,35 @@
+---
+- name: Create application directories
+  ansible.builtin.file:
+    path: '/opt/app/{{ item }}'
+    state: directory
+    owner: deployer
+    group: deployer
+    mode: '0755'
+  loop: ['', nginx, app]
+
+- name: Install Compose configuration
+  ansible.builtin.copy:
+    src: '{{ playbook_dir }}/../compose/{{ item }}'
+    dest: '/opt/app/{{ item }}'
+    owner: deployer
+    group: deployer
+    mode: '0644'
+  loop: [docker-compose.yml, nginx/default.conf, app/index.html]
+  register: app_files
+
+- name: Start application
+  community.docker.docker_compose_v2:
+    project_src: /opt/app
+    state: present
+    pull: missing
+    wait: true
+    wait_timeout: 120
+    recreate: "{{ 'always' if app_files.changed else 'auto' }}"
+
+- name: Check reverse proxy response
+  ansible.builtin.uri:
+    url: http://127.0.0.1
+    return_content: true
+  register: app_response
+  failed_when: app_response.status != 200 or 'Hello World' not in app_response.content
